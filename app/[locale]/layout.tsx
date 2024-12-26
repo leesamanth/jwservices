@@ -15,8 +15,8 @@ import DirectionProvider from "@/providers/direction-provider";
 import AuthProvider from "@/providers/auth.provider";
 
 export const metadata: Metadata = {
-  title: "Dashcode admin Template",
-  description: "created by codeshaper",
+  title: "Jollywood Services",
+  description: "Products and services for Desi people",
 };
 
 export default async function RootLayout({

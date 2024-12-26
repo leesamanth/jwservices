@@ -37,7 +37,7 @@ const ProfileInfo = async () => {
             />
 
             <div className="text-sm font-medium  capitalize lg:block hidden  ">
-              codeShaper
+              John Doe
             </div>
             <span className="text-base  me-2.5 lg:inline-block hidden">
               <Icon icon="heroicons-outline:chevron-down"></Icon>
@@ -57,13 +57,13 @@ const ProfileInfo = async () => {
 
             <div>
               <div className="text-sm font-medium text-default-800 capitalize ">
-                dashcode
+                John Doe
               </div>
               <Link
                 href="/dashboard"
                 className="text-xs text-default-600 hover:text-primary"
               >
-                dashcode@gmail.com
+                john.doe@gmail.com
               </Link>
             </div>
           </DropdownMenuLabel>

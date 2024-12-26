@@ -39,15 +39,36 @@ export function getMenuList(pathname: string, t: any): Group[] {
       menus: [
         {
           id: "dashboard",
-          href: "/",
+          href: "/dashboard",
           label: t("dashboard"),
-          active: pathname.includes("/"),
+          active: pathname.includes("/dashboard"),
           icon: "heroicons-outline:home",
           submenus: [],
         },
       ],
     },
-    
+    {
+      groupLabel: t("management"),
+      id:"management",
+      menus:[
+        {
+          id: "vendors",
+          href: "/vendors",
+          label: t("vendors"),
+          active: pathname.includes("/vendors"),
+          icon: "heroicons-outline:user-group",
+          submenus: [
+            {
+              href: "/vendors/vendor-list",
+              label: t("vendorList"),
+              active: pathname.includes("/vendors/vendor-list"),
+              icon: "heroicons-outline:user-group",
+              children: [], 
+            }, 
+          ],
+        },
+      ],
+    },
   ];
 }
 export function getHorizontalMenuList(pathname: string, t: any): Group[] {
@@ -66,8 +87,20 @@ export function getHorizontalMenuList(pathname: string, t: any): Group[] {
         },
       ],
     },
-
-    
+    {
+      groupLabel: t("management"),
+      id:"management",
+      menus:[
+        {
+          id: "vendors",
+          href: "/vendors",
+          label: t("vendors"),
+          active: pathname.includes("/vendors"),
+          icon: "heroicons-outline:user-group",
+          submenus: [],
+        },
+      ],
+    },
   ];
 }
 

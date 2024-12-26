@@ -71,7 +71,7 @@ export function MenuClassic({ }) {
 
 
             <ScrollArea className="[&>div>div[style]]:!block" dir={direction}>
-                {isDesktop && (
+               {/*  {isDesktop && (
                     <div className={cn(' space-y-3 mt-6 ', {
                         'px-4': !collapsed || hovered,
                         'text-center': collapsed || !hovered
@@ -80,9 +80,7 @@ export function MenuClassic({ }) {
                         <TeamSwitcher />
                         <SearchBar />
                     </div>
-
-                )}
-
+                )} */}
                 <nav className="mt-8 h-full w-full">
                     <ul className=" h-full flex flex-col min-h-[calc(100vh-48px-36px-16px-32px)] lg:min-h-[calc(100vh-32px-40px-32px)] items-start space-y-1 px-4">
                         {menuList?.map(({ groupLabel, menus }, index) => (
@@ -113,9 +111,7 @@ export function MenuClassic({ }) {
                                                 <TooltipProvider disableHoverableContent>
                                                     <Tooltip delayDuration={100}>
                                                         <TooltipTrigger asChild>
-
                                                             <div>
-
                                                                 <MenuItem label={label} icon={icon} href={href} active={active} id={id} collapsed={collapsed} />
                                                             </div>
                                                         </TooltipTrigger>
