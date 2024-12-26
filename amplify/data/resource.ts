@@ -12,6 +12,15 @@ const schema = a.schema({
       content: a.string(),
     })
     .authorization((allow) => [allow.publicApiKey()]),
+    Address: a
+    .model({
+      address1: a.string(),
+      address2: a.string(),
+      city: a.string(),
+      state: a.string(),
+      zip: a.string(),
+      country: a.string(),
+    }).authorization((allow) => [allow.publicApiKey()]),
     User: a
     .model({
       salutation: a.string(),
@@ -22,16 +31,7 @@ const schema = a.schema({
       username: a.string().required(),
       password: a.string(),
       addressId: a.id(),
-      address: a.belongsTo("Address", "addressId"),
-    }).authorization((allow) => [allow.publicApiKey()]),
-    Address: a
-    .model({
-      address1: a.string(),
-      address2: a.string(),
-      city: a.string(),
-      state: a.string(),
-      zip: a.string(),
-      country: a.string(),
+      address: a.belongsTo('Address', 'addressId'),
     }).authorization((allow) => [allow.publicApiKey()]),
     Vendor: a
     .model({
@@ -40,11 +40,11 @@ const schema = a.schema({
       vendorName: a.string(),
       description: a.string(),
       adminUserId: a.id(), 
-      adminUser: a.belongsTo("User", "adminUserId"), 
+      adminUser: a.belongsTo('User', 'adminUserId'), 
       email: a.string(),
       phone: a.string(),
       addressId: a.id(),
-      address: a.belongsTo("Address", "addressId"),
+      address: a.belongsTo('Address', 'addressId'),
       website: a.string(),
       status: a.string(),
     }).authorization((allow) => [allow.publicApiKey()]),
