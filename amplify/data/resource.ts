@@ -20,7 +20,9 @@ const schema = a.schema({
       state: a.string(),
       zip: a.string(),
       country: a.string(),
-    }).authorization((allow) => [allow.publicApiKey()]),
+      users: a.hasMany('User', 'addressId'),
+      vendors: a.hasMany('Vendor', 'addressId'), 
+    }),
     User: a
     .model({
       salutation: a.string(),
@@ -32,7 +34,7 @@ const schema = a.schema({
       password: a.string(),
       addressId: a.id(),
       address: a.belongsTo('Address', 'addressId'),
-    }).authorization((allow) => [allow.publicApiKey()]),
+    }),
     Vendor: a
     .model({
       legalId: a.string(),
@@ -47,8 +49,8 @@ const schema = a.schema({
       address: a.belongsTo('Address', 'addressId'),
       website: a.string(),
       status: a.string(),
-    }).authorization((allow) => [allow.publicApiKey()]),
-});
+    }),
+}).authorization((allow) => [allow.publicApiKey()]);
 
 export type Schema = ClientSchema<typeof schema>;
 
