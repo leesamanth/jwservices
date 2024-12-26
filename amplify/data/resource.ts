@@ -34,6 +34,7 @@ const schema = a.schema({
       password: a.string(),
       addressId: a.id(),
       address: a.belongsTo('Address', 'addressId'),
+      vendor: a.hasOne('Vendor', 'adminUserId'),
     }),
     Vendor: a
     .model({
