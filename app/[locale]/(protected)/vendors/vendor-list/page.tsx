@@ -3,12 +3,13 @@ import VendorsTable from "./table";
 
 const CustomerList = () => {
   return (
+    <>
     <div>
-      Customer List
       <Card>
         <VendorsTable />
       </Card>
     </div>
+    </>
   );
 }
 

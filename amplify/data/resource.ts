@@ -36,10 +36,17 @@ const schema = a.schema({
       address: a.belongsTo('Address', 'addressId'),
       vendor: a.hasOne('Vendor', 'adminUserId'),
     }),
+    VendorType: a
+    .model({
+      name: a.string(),
+      description: a.string(),
+      vendors: a.hasMany('Vendor', 'vendorTypeId'),
+    }),
     Vendor: a
     .model({
       legalId: a.string(),
-      vendorType: a.string(),
+      vendorTypeId: a.id(),
+      vendorType: a.belongsTo('VendorType', 'vendorTypeId'),
       vendorName: a.string(),
       description: a.string(),
       adminUserId: a.id(), 

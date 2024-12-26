@@ -77,40 +77,11 @@ const VendorsTable = () => {
   return (
     <div className="w-full">
       <div className="flex items-center py-4 px-5">
-        <div className="flex-1 text-xl flex gap-4 font-medium text-default-900">
-
-
-          <Select>
-            <SelectTrigger className=" w-[150px]">
-              <SelectValue placeholder="Bulk Action" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Bulk Action</SelectLabel>
-                <SelectItem value="all">All</SelectItem>
-                <SelectItem value="paid">Paid</SelectItem>
-                <SelectItem value="pending">Pending</SelectItem>
-                <SelectItem value="failed">Failed</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
+        <div className="flex-1 text-xl font-medium text-default-900">
+          Vendors
         </div>
         <div className="flex-none">
           <div className="flex items-center gap-4 flex-wrap">
-            <Select>
-              <SelectTrigger className=" w-[80px]">
-                <SelectValue placeholder="Date" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectGroup>
-                  <SelectLabel>Date</SelectLabel>
-                  <SelectItem value="all">All</SelectItem>
-                  <SelectItem value="paid">Paid</SelectItem>
-                  <SelectItem value="pending">Pending</SelectItem>
-                  <SelectItem value="failed">Failed</SelectItem>
-                </SelectGroup>
-              </SelectContent>
-            </Select>
             <Input
               placeholder="Search..."
               value={
@@ -119,12 +90,44 @@ const VendorsTable = () => {
               onChange={(event) =>
                 table.getColumn("status")?.setFilterValue(event.target.value)
               }
-              className="w-full "
+              className="max-w-sm "
             />
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  size="md"
+                  rounded="sm"
+                  className="bg-white hover:ring-0 hover:ring-offset-0 dark:bg-default-900 hover:bg-default-50 font-normal text-default-600 border-default-200 border-solid border "
+                >
+                  <Calendar className="h-4 w-4 " />
+                  <span className="px-2">Select Date</span>
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="p-0 overflow-hidden bg-transparent shadow-none border-none">
+                <Card>
+                  <BasicCalendar />
+                </Card>
+              </PopoverContent>
+            </Popover>
+
+            <Button
+              size="md"
+              rounded="sm"
+              className="bg-white hover:ring-0 hover:ring-offset-0 dark:bg-default-900 hover:bg-default-50 font-normal text-default-600 border-default-200 border-solid border"
+            >
+              <Filter className="h-4 w-4" />
+              <span className="px-2">Filter</span>
+            </Button>
+            <Link
+              href="/vendors/add-vendor"
+              className="hover:ring-offset-[1px] flex gap-2 items-center text-sm bg-default text-default-50 py-2 px-3 rounded-sm hover:ring-default hover:ring-2 duration-200 transition-all"
+            >
+              <Plus className="h-4 w-4" />
+              <span className="px-2">Add Vendor</span>
+            </Link>
           </div>
         </div>
       </div>
-
       <CardContent>
         <div className="border border-solid border-default-200 rounded-lg overflow-hidden border-t-0">
           <Table>
