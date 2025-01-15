@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -18,26 +20,27 @@ import { useState, useEffect } from "react";
 import { generateClient } from "aws-amplify/data";
 import type { Schema } from "@/amplify/data/resource";
 import { Amplify } from "aws-amplify";
-import outputs from "@/amplify_outputs.json"; 
+import outputs from "@/amplify_outputs.json";
 
 Amplify.configure(outputs);
 const client = generateClient<Schema>();
 
 const AddVendor = () => {
-
   const [vendor, setVendor] = useState<Array<Schema["Vendor"]["type"]>>([]);
-  const [vendorType, setVendorType] = useState<Array<Schema["VendorType"]["type"]>>([]);
-  
+  const [vendorType, setVendorType] = useState<
+    Array<Schema["VendorType"]["type"]>
+  >([]);
+
   function listVendorTypes() {
     client.models.VendorType.observeQuery().subscribe({
       next: (data) => setVendorType([...data.items]),
     });
   }
   function listVendors() {
-      client.models.Vendor.observeQuery().subscribe({
-        next: (data) => setVendor([...data.items]),
-      });
-    }
+    client.models.Vendor.observeQuery().subscribe({
+      next: (data) => setVendor([...data.items]),
+    });
+  }
 
   useEffect(() => {
     listVendors();
@@ -79,14 +82,28 @@ const AddVendor = () => {
                 <SelectContent>
                   <SelectGroup>
                     <SelectLabel>Category</SelectLabel>
-                    <SelectItem value="beauty-and-health">Beauty and Health</SelectItem>
-                    <SelectItem value="event-management">Event Management</SelectItem>
-                    <SelectItem value="event-organizer">Event Organizer</SelectItem>
-                    <SelectItem value="food-and-grocery">Food and Grocery</SelectItem>
+                    <SelectItem value="beauty-and-health">
+                      Beauty and Health
+                    </SelectItem>
+                    <SelectItem value="event-management">
+                      Event Management
+                    </SelectItem>
+                    <SelectItem value="event-organizer">
+                      Event Organizer
+                    </SelectItem>
+                    <SelectItem value="food-and-grocery">
+                      Food and Grocery
+                    </SelectItem>
                     <SelectItem value="food-service">Food Service</SelectItem>
-                    <SelectItem value="educational-service">Educational Services</SelectItem>
-                    <SelectItem value="fashion-and-clothing">Fashion and Clothing</SelectItem>
-                    <SelectItem value="home-and-living">Home and Living</SelectItem>
+                    <SelectItem value="educational-service">
+                      Educational Services
+                    </SelectItem>
+                    <SelectItem value="fashion-and-clothing">
+                      Fashion and Clothing
+                    </SelectItem>
+                    <SelectItem value="home-and-living">
+                      Home and Living
+                    </SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
@@ -110,20 +127,28 @@ const AddVendor = () => {
               </Select>
             </div>
             <div className="flex items-center flex-wrap">
-                <Label className="w-[130px] flex-none">Description</Label>
-                <Textarea id="pn4" placeholder="Vendor description..." />
+              <Label className="w-[130px] flex-none">Description</Label>
+              <Textarea id="pn4" placeholder="Vendor description..." />
             </div>
             <div className="flex items-center flex-wrap">
               <Label className="w-[150px] flex-none" htmlFor="h_vendoremail">
                 Vendor Email
               </Label>
-              <Input id="h_vendoremail" type="text" placeholder="Vendor email" />
+              <Input
+                id="h_vendoremail"
+                type="text"
+                placeholder="Vendor email"
+              />
             </div>
             <div className="flex items-center flex-wrap">
               <Label className="w-[150px] flex-none" htmlFor="h_vendorephone">
                 Vendor Phone
               </Label>
-              <Input id="h_vendorphone" type="text" placeholder="Vendor phone" />
+              <Input
+                id="h_vendorphone"
+                type="text"
+                placeholder="Vendor phone"
+              />
             </div>
             <div className="flex items-center flex-wrap">
               <Label className="w-[150px] flex-none" htmlFor="h_vendorweb">
@@ -134,7 +159,7 @@ const AddVendor = () => {
           </CardContent>
         </Card>
       </div>
-{/*       <div className="col-span-12 md:col-span-5 space-y-4 lg:col-span-5">
+      {/*       <div className="col-span-12 md:col-span-5 space-y-4 lg:col-span-5">
         <Card>
           <CardHeader className="border-b border-solid border-default-200 mb-6">
             <CardTitle>Shipping Configuration</CardTitle>
