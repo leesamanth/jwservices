@@ -65,6 +65,13 @@ export function getMenuList(pathname: string, t: any): Group[] {
               icon: "heroicons-outline:user-group",
               children: [], 
             }, 
+            {
+              href: "/vendors/add-vendor",
+              label: t("addVendor"),
+              active: pathname.includes("/vendors/add-vendor"),
+              icon: "heroicons-outline:user",
+              children: [], 
+            }, 
           ],
         },
       ],

@@ -1,7 +1,7 @@
 import { Card } from "@/components/ui/card"
 import VendorsTable from "./table";
 
-const CustomerList = () => {
+const VendorList = () => {
   return (
     <>
     <div>
@@ -13,4 +13,4 @@ const CustomerList = () => {
   );
 }
 
-export default CustomerList
+export default VendorList

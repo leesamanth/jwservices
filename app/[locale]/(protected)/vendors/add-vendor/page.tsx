@@ -14,7 +14,48 @@ import {
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 
+import { useState, useEffect } from "react";
+import { generateClient } from "aws-amplify/data";
+import type { Schema } from "@/amplify/data/resource";
+import { Amplify } from "aws-amplify";
+import outputs from "@/amplify_outputs.json"; 
+
+Amplify.configure(outputs);
+const client = generateClient<Schema>();
+
 const AddVendor = () => {
+
+  const [vendor, setVendor] = useState<Array<Schema["Vendor"]["type"]>>([]);
+  const [vendorType, setVendorType] = useState<Array<Schema["VendorType"]["type"]>>([]);
+  
+  function listVendorTypes() {
+    client.models.VendorType.observeQuery().subscribe({
+      next: (data) => setVendorType([...data.items]),
+    });
+  }
+  function listVendors() {
+      client.models.Vendor.observeQuery().subscribe({
+        next: (data) => setVendor([...data.items]),
+      });
+    }
+
+  useEffect(() => {
+    listVendors();
+  }, []);
+
+  function createVendor() {
+    client.models.Vendor.create({
+      legalId: vendor.legalId,
+      vendorTypeId: vendor.vendorTypeId,
+      vendorName: vendor.vendorName,
+      description: vendor.description,
+      email: vendor.email,
+      phone: vendor.phone,
+      website: vendor.website,
+      status: vendor.status,
+    });
+  }
+
   return (
     <div className=" grid grid-cols-12  gap-4  rounded-lg">
       <div className="col-span-12 md:col-span-7 space-y-4 lg:col-span-7 ">
@@ -29,7 +70,6 @@ const AddVendor = () => {
               </Label>
               <Input id="h_Vendorname" type="text" placeholder="Vendor name" />
             </div>
-
             <div className="flex items-center flex-wrap">
               <Label className="w-[150px] flex-none">Vendor Type</Label>
               <Select>
@@ -52,202 +92,49 @@ const AddVendor = () => {
               </Select>
             </div>
             <div className="flex items-center flex-wrap">
-              <Label className="w-[150px] flex-none" htmlFor="unit">
-                Unit
-              </Label>
-              <Input
-                id="unit"
-                type="text"
-                placeholder="Unit (e.g. KG, Pc etc)"
-              />
-            </div>
-
-            <div className="flex items-center flex-wrap">
-              <Label className="w-[150px] flex-none" htmlFor="weight">
-                Label Wight (in kg)
-              </Label>
-              <Input id="weight" type="text" placeholder="0.00" />
-            </div>
-
-            <div className="flex items-center flex-wrap">
-              <Label className="w-[150px] flex-none" htmlFor="qty">
-                Minimum Purchase Qty
-              </Label>
-              <Input id="qty" type="text" placeholder="1" />
-            </div>
-
-            <div className="flex items-center flex-wrap">
-              <Label className="w-[150px] flex-none" htmlFor="tags">
-                Tags
-              </Label>
-              <Input
-                id="tags"
-                type="text"
-                placeholder="Type & hit enter to add a tag"
-              />
-            </div>
-
-            <div className="flex items-center flex-wrap">
-              <Label className="w-[150px] flex-none" htmlFor="brcode">
-                Barcode
-              </Label>
-              <Input id="brcode" type="text" placeholder="Code" />
-            </div>
-            <div className="flex items-center flex-wrap gap-10">
-              <Label className="flex-none w-[132px] ">Refundable</Label>
-              <div className="flex-1">
-                <Switch color="success" />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="border-b border-solid border-default-200 mb-6">
-            <CardTitle>Product Images</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center space-x-6 rtl:space-x-reverse">
-              <Label className="inline-flex text-sm font-normal ">
-                Gallery Images (600 X 600)
-              </Label>
-              <div className="flex-1">
-                <Input
-                  className="read-only:leading-0 py-1.5 h-full ps-0"
-                  type="file"
-                />
-              </div>
-            </div>
-            <div className="flex items-center space-x-6 rtl:space-x-reverse">
-              <Label className="inline-flex text-sm font-normal ">
-                Thumb Images (600 X 600)
-              </Label>
-              <div className="flex-1">
-                <Input
-                  className="read-only:leading-0 py-1.5 h-full ps-0"
-                  type="file"
-                />
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="border-b border-solid border-default-200 mb-6">
-            <CardTitle>Product Variation</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center flex-wrap">
-              <Label className="w-[132px]">Color</Label>
+              <Label className="w-[150px] flex-none">Status</Label>
               <Select>
                 <SelectTrigger className="flex-1">
-                  <SelectValue placeholder="Select Color" />
+                  <SelectValue placeholder="Select Status" />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectGroup>
-                    <SelectLabel>Color</SelectLabel>
-                    <SelectItem value="apple">Apple</SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
-                    <SelectItem value="blueberry">Blueberry</SelectItem>
-                    <SelectItem value="grapes">Grapes</SelectItem>
-                    <SelectItem value="pineapple">Pineapple</SelectItem>
+                    <SelectLabel>Status</SelectLabel>
+                    <SelectItem value="onboarding">Onboarding</SelectItem>
+                    <SelectItem value="active">Active</SelectItem>
+                    <SelectItem value="suspended">Suspended</SelectItem>
+                    <SelectItem value="terminated">Terminated</SelectItem>
+                    <SelectItem value="archived">Archived</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>
             </div>
-
             <div className="flex items-center flex-wrap">
-              <Label className="w-[132px]">Attributes</Label>
-              <Select>
-                <SelectTrigger className="flex-1">
-                  <SelectValue placeholder="Select Attributes" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Attributes</SelectLabel>
-                    <SelectItem value="apple">Apple</SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
-                    <SelectItem value="blueberry">Blueberry</SelectItem>
-                    <SelectItem value="grapes">Grapes</SelectItem>
-                    <SelectItem value="pineapple">Pineapple</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
+                <Label className="w-[130px] flex-none">Description</Label>
+                <Textarea id="pn4" placeholder="Vendor description..." />
             </div>
-
             <div className="flex items-center flex-wrap">
-              <Label className="w-[132px]">Size</Label>
-              <Select>
-                <SelectTrigger className="flex-1">
-                  <SelectValue placeholder="Select Size" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectGroup>
-                    <SelectLabel>Size</SelectLabel>
-                    <SelectItem value="apple">Apple</SelectItem>
-                    <SelectItem value="banana">Banana</SelectItem>
-                    <SelectItem value="blueberry">Blueberry</SelectItem>
-                    <SelectItem value="grapes">Grapes</SelectItem>
-                    <SelectItem value="pineapple">Pineapple</SelectItem>
-                  </SelectGroup>
-                </SelectContent>
-              </Select>
-            </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="border-b border-solid border-default-200 mb-6">
-            <CardTitle>Product Description</CardTitle>
-          </CardHeader>
-          <CardContent className="flex">
-            <Label className="w-[130px] flex-none">Description</Label>
-            <Textarea id="pn4" placeholder="Some product description..." />
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="border-b border-solid border-default-200 mb-6">
-            <CardTitle>PDF Specification</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex items-center space-x-10 rtl:space-x-reverse">
-              <Label className="inline-flex text-sm font-normal">
-                Add PDF File
+              <Label className="w-[150px] flex-none" htmlFor="h_vendoremail">
+                Vendor Email
               </Label>
-              <div className="flex-1">
-                <Input
-                  className="read-only:leading-0 py-1.5 h-full ps-0"
-                  type="file"
-                />
-              </div>
+              <Input id="h_vendoremail" type="text" placeholder="Vendor email" />
             </div>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="border-b border-solid border-default-200 mb-6">
-            <CardTitle>SEO Meta Tags</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <div className="flex">
-              <Label className="w-[130px]">Meta Title</Label>
-              <Input id="meta_title" type="text" placeholder="Title" />
+            <div className="flex items-center flex-wrap">
+              <Label className="w-[150px] flex-none" htmlFor="h_vendorephone">
+                Vendor Phone
+              </Label>
+              <Input id="h_vendorphone" type="text" placeholder="Vendor phone" />
             </div>
-
-            <div className="flex">
-              <Label className="w-[130px]">Description</Label>
-              <Textarea
-                id="pn4"
-                placeholder="Write something for your product seo"
-              />
-            </div>
-            <div className="flex items-center ">
-              <Label className="flex-none w-[130px] ">Meta Image</Label>
-              <Input
-                className="read-only:leading-0 py-1.5 h-full ps-0"
-                type="file"
-              />
+            <div className="flex items-center flex-wrap">
+              <Label className="w-[150px] flex-none" htmlFor="h_vendorweb">
+                Vendor Website
+              </Label>
+              <Input id="h_vendorweb" type="text" placeholder="Vendor web" />
             </div>
           </CardContent>
         </Card>
       </div>
-      <div className="col-span-12 md:col-span-5 space-y-4 lg:col-span-5">
+{/*       <div className="col-span-12 md:col-span-5 space-y-4 lg:col-span-5">
         <Card>
           <CardHeader className="border-b border-solid border-default-200 mb-6">
             <CardTitle>Shipping Configuration</CardTitle>
@@ -463,7 +350,7 @@ const AddVendor = () => {
             </div>
           </CardContent>
         </Card>
-      </div>
+      </div> */}
       <div className="col-span-12 flex justify-end">
         <Button>Save Vendor</Button>
       </div>
